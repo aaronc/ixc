@@ -3,7 +3,7 @@
 use allocator_api2::alloc::Allocator;
 use ixc_message_api::code::{ErrorCode, SystemCode};
 use ixc_message_api::handler::HostBackend;
-use ixc_message_api::header::MessageSelector;
+use ixc_message_api::message_selector::MessageSelector;
 use ixc_message_api::packet::MessagePacket;
 
 /// A router for message packets.

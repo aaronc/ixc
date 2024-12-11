@@ -4,8 +4,8 @@ use ixc_core::Context;
 use ixc_core::error::ClientError;
 use ixc_core_macros::message_selector;
 use ixc_message_api::code::ErrorCode;
-use ixc_message_api::header::MessageSelector;
 use ixc_message_api::AccountID;
+use ixc_message_api::message_selector::MessageSelector;
 
 const STATE_ACCOUNT: AccountID = AccountID::new(2);
 

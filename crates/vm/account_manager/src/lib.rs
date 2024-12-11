@@ -97,6 +97,7 @@ struct ExecContext<'a, CM: VM, ST: StateHandler, IDG: IDGenerator, AUTHZ: Author
     call_stack: Vec<Frame, &'a dyn Allocator>,
 }
 
+#[derive(Debug)]
 struct Frame {
     active_account: AccountID,
 }
@@ -110,6 +111,8 @@ struct QueryContext<'a, CM: VM, ST: StateHandler> {
 const ROOT_ACCOUNT: AccountID = AccountID::new(1);
 const STATE_ACCOUNT: AccountID = AccountID::new(2);
 
+extern crate std;
+
 /// Invoke a message packet in the context of the provided state handler.
 impl<'a, CM: VM, ST: StateHandler, IDG: IDGenerator, AUTHZ: AuthorizationMiddleware> HostBackend
     for ExecContext<'a, CM, ST, IDG, AUTHZ>
@@ -121,6 +124,7 @@ impl<'a, CM: VM, ST: StateHandler, IDG: IDGenerator, AUTHZ: AuthorizationMiddlew
     ) -> Result<(), ErrorCode> {
         let caller = message_packet.header().caller;
         let target_account = message_packet.header().account;
+        std::println!("call stack: {:?}, caller: {:?}, target: {:?}, message selector: {:?}", self.call_stack, caller, target_account, message_packet.header().message_selector);
         let active_account = self
             .call_stack
             .last()

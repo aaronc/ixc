@@ -2,7 +2,6 @@
 use allocator_api2::alloc::Allocator;
 use imbl::{HashMap, OrdMap, Vector};
 use ixc_core_macros::message_selector;
-use ixc_message_api::header::MessageSelector;
 use ixc_message_api::packet::MessagePacket;
 use ixc_message_api::AccountID;
 use std::alloc::Layout;
@@ -10,6 +9,7 @@ use std::cell::RefCell;
 use thiserror::Error;
 use ixc_account_manager::state_handler::{StateHandler};
 use ixc_account_manager::state_handler::std::{StdStateError, StdStateManager};
+use ixc_message_api::message_selector::MessageSelector;
 
 #[derive(Default, Clone)]
 pub struct VersionedMultiStore {

@@ -1,6 +1,7 @@
 //! Message header structure.
 use crate::account_id::AccountID;
 use crate::data_pointer::DataPointer;
+use crate::message_selector::MessageSelector;
 
 /// The size of a message header in bytes.
 pub const MESSAGE_HEADER_SIZE: usize = size_of::<MessageHeader>();
@@ -31,9 +32,6 @@ pub struct MessageHeader {
 
     reserved: [u8; 16],
 }
-
-/// A message selector code.
-pub type MessageSelector = u64;
 
 #[cfg(test)]
 mod tests {

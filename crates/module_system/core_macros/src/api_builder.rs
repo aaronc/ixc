@@ -1,10 +1,9 @@
 use crate::handler::PublishedFnInfo;
-use crate::message_selector::message_selector_from_str;
 use crate::util::push_item;
 use core::borrow::Borrow;
 use heck::ToUpperCamelCase;
 use manyhow::{bail, ensure};
-use proc_macro2::{Ident, TokenStream as TokenStream2};
+use proc_macro2::{Ident, Literal, TokenStream as TokenStream2};
 use quote::{format_ident, quote};
 use syn::punctuated::Punctuated;
 use syn::{parse_quote, Item, ReturnType, Signature, Type};
@@ -231,19 +230,19 @@ impl APIBuilder {
         )?;
 
         // calculate the message selector
-        let selector = message_selector_from_str(msg_struct_name.to_string().as_str());
         let return_type = match &signature.output {
             ReturnType::Type(_, ty) => ty,
             ReturnType::Default => {
                 bail!("expected return type")
             }
         };
+        let msg_struct_name_str = Literal::string(&msg_struct_name.to_string());
         if publish_target.on_create.is_none() {
             push_item(
                 &mut self.items,
                 quote! {
                     impl <'a> ::ixc::core::message::MessageBase<'a> for #msg_struct_name #opt_lifetime {
-                        const SELECTOR: ::ixc::message_api::header::MessageSelector = #selector;
+                        const SELECTOR: ::ixc::message_api::message_selector::MessageSelector = ::ixc::core::message_selector!(#msg_struct_name_str);
                         type Response<'b> = <#return_type as ::ixc::core::message::ExtractResponseTypes>::Response;
                         type Error = <#return_type as ::ixc::core::message::ExtractResponseTypes>::Error;
                         type Codec = ::ixc::schema::binary::NativeBinaryCodec;

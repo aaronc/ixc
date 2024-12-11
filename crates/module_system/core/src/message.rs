@@ -1,7 +1,7 @@
 //! The Message trait for invoking messages dynamically.
 
 use ixc_message_api::code::HandlerCode;
-use ixc_message_api::header::MessageSelector;
+use ixc_message_api::message_selector::MessageSelector;
 use ixc_schema::codec::Codec;
 use ixc_schema::structs::StructSchema;
 use ixc_schema::value::{OptionalValue, SchemaValue};

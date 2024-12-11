@@ -22,6 +22,7 @@ pub use events::EventBus;
 pub use handler::Service;
 pub use result::Result;
 pub use unique_id::new_unique_id;
+pub use ixc_core_macros::message_selector;
 
 /// Create an error.
 #[macro_export]
